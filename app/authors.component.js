@@ -24,7 +24,6 @@ System.register(['angular2/core', './author.service'], function(exports_1, conte
             AuthorsComponent = (function () {
                 function AuthorsComponent(authorService) {
                     this.title = "Title for the authors page";
-                    this.authors = [];
                     this.authors = authorService.getAuthors();
                 }
                 AuthorsComponent = __decorate([
