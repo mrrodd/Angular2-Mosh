@@ -1,16 +1,15 @@
 import { Component, Input, Output, EventEmitter } from 'angular2/core';
 
 @Component({
-    selector: 'star-rating',
-    template: `
-        <i class='glyphicon' 
-           [class.glyphicon-star-empty]='!isFavorite'
-           [class.glyphicon-star]='isFavorite'
-           (click)='onStarClick()' >
-        </i>
-    `
+    selector: 'favorite',
+    templateUrl: 'app/favorite.template.html',
+    styles: [`
+        .glyphicon-star {
+            color: orange;
+        }
+    `]
 })
-export class StarRatingComponent {
+export class FavoriteComponent {
     @Input() isFavorite = false;
     @Output() change = new EventEmitter();
 

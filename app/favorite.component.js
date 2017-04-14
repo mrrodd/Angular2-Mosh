@@ -11,41 +11,42 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var StarRatingComponent;
+    var FavoriteComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            StarRatingComponent = (function () {
-                function StarRatingComponent() {
+            FavoriteComponent = (function () {
+                function FavoriteComponent() {
                     this.isFavorite = false;
                     this.change = new core_1.EventEmitter();
                 }
-                StarRatingComponent.prototype.onStarClick = function () {
+                FavoriteComponent.prototype.onStarClick = function () {
                     this.isFavorite = !this.isFavorite;
                     this.change.emit({ value: this.isFavorite });
                 };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Object)
-                ], StarRatingComponent.prototype, "isFavorite", void 0);
+                ], FavoriteComponent.prototype, "isFavorite", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
-                ], StarRatingComponent.prototype, "change", void 0);
-                StarRatingComponent = __decorate([
+                ], FavoriteComponent.prototype, "change", void 0);
+                FavoriteComponent = __decorate([
                     core_1.Component({
-                        selector: 'star-rating',
-                        templateUrl: 'app/starrating.template.html'
+                        selector: 'favorite',
+                        templateUrl: 'app/favorite.template.html',
+                        styles: ["\n        .glyphicon-star {\n            color: orange;\n        }\n    "]
                     }), 
                     __metadata('design:paramtypes', [])
-                ], StarRatingComponent);
-                return StarRatingComponent;
+                ], FavoriteComponent);
+                return FavoriteComponent;
             }());
-            exports_1("StarRatingComponent", StarRatingComponent);
+            exports_1("FavoriteComponent", FavoriteComponent);
         }
     }
 });
-//# sourceMappingURL=starrating.component.js.map
+//# sourceMappingURL=favorite.component.js.map
