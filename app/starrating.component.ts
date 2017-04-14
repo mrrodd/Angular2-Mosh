@@ -1,19 +1,21 @@
-import { Component } from 'angular2/core';
+import { Component, Input, Output, EventEmitter } from 'angular2/core';
 
 @Component({
     selector: 'star-rating',
     template: `
         <i class='glyphicon' 
-           [class.glyphicon-star-empty]='isEmpty'
-           [class.glyphicon-star]='!isEmpty'
+           [class.glyphicon-star-empty]='!isFavorite'
+           [class.glyphicon-star]='isFavorite'
            (click)='onStarClick()' >
         </i>
     `
 })
 export class StarRatingComponent {
-    isEmpty: boolean  = true;
+    @Input() isFavorite = false;
+    @Output() change = new EventEmitter();
 
     onStarClick(): void {
-        this.isEmpty = !this.isEmpty;
+        this.isFavorite = !this.isFavorite;
+        this.change.emit({value: this.isFavorite});
     }
 }

@@ -8,7 +8,7 @@ import {StarRatingComponent} from './starrating.component'
     template: `
         <h2>
             Courses
-            <star-rating></star-rating>
+            <star-rating [isFavorite]="isFavorite" (change)="onFavoriteChange($event)" ></star-rating>
         </h2>
         {{title}}
         <input type="text" autoGrow />
@@ -25,8 +25,13 @@ import {StarRatingComponent} from './starrating.component'
 export class CoursesComponent {
     title = "The title of courses page";
     courses: string[];
+    isFavorite: true;
 
     constructor(courseService: CourseService) {
         this.courses = courseService.getCourses();
+    }
+
+    onFavoriteChange($event) {
+        console.log($event);
     }
 }

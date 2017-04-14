@@ -20,15 +20,25 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         execute: function() {
             StarRatingComponent = (function () {
                 function StarRatingComponent() {
-                    this.isEmpty = true;
+                    this.isFavorite = false;
+                    this.change = new core_1.EventEmitter();
                 }
                 StarRatingComponent.prototype.onStarClick = function () {
-                    this.isEmpty = !this.isEmpty;
+                    this.isFavorite = !this.isFavorite;
+                    this.change.emit({ value: this.isFavorite });
                 };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], StarRatingComponent.prototype, "isFavorite", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], StarRatingComponent.prototype, "change", void 0);
                 StarRatingComponent = __decorate([
                     core_1.Component({
                         selector: 'star-rating',
-                        template: "\n        <i class='glyphicon' \n           [class.glyphicon-star-empty]='isEmpty'\n           [class.glyphicon-star]='!isEmpty'\n           (click)='onStarClick()' >\n        </i>\n    "
+                        template: "\n        <i class='glyphicon' \n           [class.glyphicon-star-empty]='!isFavorite'\n           [class.glyphicon-star]='isFavorite'\n           (click)='onStarClick()' >\n        </i>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StarRatingComponent);

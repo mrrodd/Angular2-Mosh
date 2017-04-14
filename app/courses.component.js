@@ -30,12 +30,16 @@ System.register(['angular2/core', './course.service', './auto-grow.directive', '
             CoursesComponent = (function () {
                 function CoursesComponent(courseService) {
                     this.title = "The title of courses page";
+                    this.isFavorite = true;
                     this.courses = courseService.getCourses();
                 }
+                CoursesComponent.prototype.onFavoriteChange = function ($event) {
+                    console.log($event);
+                };
                 CoursesComponent = __decorate([
                     core_1.Component({
                         selector: 'courses',
-                        template: "\n        <h2>\n            Courses\n            <star-rating></star-rating>\n        </h2>\n        {{title}}\n        <input type=\"text\" autoGrow />\n        <ul>\n            <li *ngFor=\"#course of courses\">\n                {{course}}\n            </li>\n        </ul>\n        ",
+                        template: "\n        <h2>\n            Courses\n            <star-rating [isFavorite]=\"isFavorite\" (change)=\"onFavoriteChange($event)\" ></star-rating>\n        </h2>\n        {{title}}\n        <input type=\"text\" autoGrow />\n        <ul>\n            <li *ngFor=\"#course of courses\">\n                {{course}}\n            </li>\n        </ul>\n        ",
                         providers: [course_service_1.CourseService],
                         directives: [auto_grow_directive_1.AutoGrowDirective, starrating_component_1.StarRatingComponent]
                     }), 
