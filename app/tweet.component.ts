@@ -1,5 +1,6 @@
 import { Component } from 'angular2/core'
 import { LikeComponent } from './like.component'
+import { TweetService } from './tweet.service'
 
 @Component({
     selector: 'tweet',
@@ -7,35 +8,38 @@ import { LikeComponent } from './like.component'
         <div class="media" *ngFor="#tweet of tweets; #i=index">
             <div class="media-left">
                 <a href="#">
-                    <img class="media-object" src="http://lorempixel.com/100/100/people?{{i}}" alt="Lorem Pixel">
+                    <img class="media-object" src="{{tweet.imageUrl}}?{{i}}" alt="Random Image">
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading">{{tweet.name}} {{tweet.handle}}</h4>
-                <h5 class="media-heading">{{tweet.description}}</h5>
-                <like></like>
+                <h4 class="media-heading">{{tweet.name}} <span class="handle">{{tweet.handle}}</span></h4>
+                {{tweet.description}}
+                <div>
+                    <like [totalLikes]='tweet.totalLikes' [iLike]="tweet.iLike"></like>
+                </div>
             </div>
             
         </div>    
     `,
+    styles: [`
+        .handle {
+            color: #ccc;
+        }
+        
+        .media {
+            margin-bottom: 20px;
+        }
+        
+        .media-object {
+            border-radius: 10px;
+        }
+    `],    
+    providers: [TweetService],
     directives: [LikeComponent]
 })
 export class TweetComponent {
-    tweets = [
-        {
-            "name": "Windward",
-            "handle": "@windwardstudios",
-            "description": "Looking for a better company reporting or docgen app?"
-        },
-        {
-            "name": "AngularJS News",
-            "handle": "@angularjs_news",
-            "description": "Right Relevance: Infuencers, Articles and Conversations"
-        },
-        {
-            "name": "UX & Bootstrap",
-            "handle": "@3rdwave",
-            "description": "10 Reasons Why Web Projects Fail"
-        }
-    ]
+    tweets: any[];
+    constructor(service: TweetService) {
+        this.tweets = service.getTweets();
+    }
 }

@@ -1,4 +1,4 @@
-System.register(['angular2/core', './like.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './like.component', './tweet.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './like.component'], function(exports_1, conte
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, like_component_1;
+    var core_1, like_component_1, tweet_service_1;
     var TweetComponent;
     return {
         setters:[
@@ -19,35 +19,24 @@ System.register(['angular2/core', './like.component'], function(exports_1, conte
             },
             function (like_component_1_1) {
                 like_component_1 = like_component_1_1;
+            },
+            function (tweet_service_1_1) {
+                tweet_service_1 = tweet_service_1_1;
             }],
         execute: function() {
             TweetComponent = (function () {
-                function TweetComponent() {
-                    this.tweets = [
-                        {
-                            "name": "Windward",
-                            "handle": "@windwardstudios",
-                            "description": "Looking for a better company reporting or docgen app?"
-                        },
-                        {
-                            "name": "AngularJS News",
-                            "handle": "@angularjs_news",
-                            "description": "Right Relevance: Infuencers, Articles and Conversations"
-                        },
-                        {
-                            "name": "UX & Bootstrap",
-                            "handle": "@3rdwave",
-                            "description": "10 Reasons Why Web Projects Fail"
-                        }
-                    ];
+                function TweetComponent(service) {
+                    this.tweets = service.getTweets();
                 }
                 TweetComponent = __decorate([
                     core_1.Component({
                         selector: 'tweet',
-                        template: "\n        <div class=\"media\" *ngFor=\"#tweet of tweets; #i=index\">\n            <div class=\"media-left\">\n                <a href=\"#\">\n                    <img class=\"media-object\" src=\"http://lorempixel.com/100/100/people?{{i}}\" alt=\"Lorem Pixel\">\n                </a>\n            </div>\n            <div class=\"media-body\">\n                <h4 class=\"media-heading\">{{tweet.name}} {{tweet.handle}}</h4>\n                <h5 class=\"media-heading\">{{tweet.description}}</h5>\n                <like></like>\n            </div>\n            \n        </div>    \n    ",
+                        template: "\n        <div class=\"media\" *ngFor=\"#tweet of tweets; #i=index\">\n            <div class=\"media-left\">\n                <a href=\"#\">\n                    <img class=\"media-object\" src=\"{{tweet.imageUrl}}?{{i}}\" alt=\"Random Image\">\n                </a>\n            </div>\n            <div class=\"media-body\">\n                <h4 class=\"media-heading\">{{tweet.name}} <span class=\"handle\">{{tweet.handle}}</span></h4>\n                {{tweet.description}}\n                <div>\n                    <like [totalLikes]='tweet.totalLikes' [iLike]=\"tweet.iLike\"></like>\n                </div>\n            </div>\n            \n        </div>    \n    ",
+                        styles: ["\n        .handle {\n            color: #ccc;\n        }\n        \n        .media {\n            margin-bottom: 20px;\n        }\n        \n        .media-object {\n            border-radius: 10px;\n        }\n    "],
+                        providers: [tweet_service_1.TweetService],
                         directives: [like_component_1.LikeComponent]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [tweet_service_1.TweetService])
                 ], TweetComponent);
                 return TweetComponent;
             }());
