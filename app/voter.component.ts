@@ -1,46 +1,54 @@
-import { Component, Input, Output } from 'angular2/core';
+import { Component, Input, Output, EventEmitter } from 'angular2/core';
 
 @Component({
     selector: 'voter',
     template: `
-        <div class='vote'>
-            <i class='glyphicon glyphicon-menu-up' 
-               (click)='onVoteUp()'
-               [class.orange]='vote > baseVote'>
+        <div class='voter'>
+            <i class='glyphicon glyphicon-menu-up vote-button' 
+                [class.highlighted]='myVote == 1'
+                (click)='onVoteUp()'>
             </i>
-            <span>{{vote}}</span>
-            <i class='glyphicon glyphicon-menu-down' 
-               (click)='onVoteDown()'
-               [class.orange]='vote < baseVote'>
+            <span class='vote-count'>{{voteCount + myVote}}</span>
+            <i class='glyphicon glyphicon-menu-down vote-button' 
+                [class.highlighted]='myVote == -1'
+                (click)='onVoteDown()'>
             </i>
         </div>
     `,
     styles: [`
-        .vote {
-            font-size: 25px;
+        .voter {
             width: 20px;
+            text-align: center;
+            color: #999;
         }
-        .glyphicon {
-            cursor: hand;
+        .vote-count {
+            font-size: 1.2em;
         }
-        .orange {
+        .vote-button {
+            cursor: pointer;
+        }
+        .highlighted {
+            font-weight: bold;
             color: orange;
         }
     `]
 })
 export class VoterComponent {
-    title = 'Voter';
-    @Input() voteCount = 10;
-    baseVote = this.voteCount; 
+    @Input() voteCount = 0;
+    @Input() myVote = 0;
+    @Output() vote = new EventEmitter();
 
     onVoteUp(): void {
-        if(this.voteCount == this.baseVote || this.voteCount == this.baseVote - 1) 
-            this.voteCount += 1;
+        if(this.myVote == 1) return;
+            
+        this.myVote++;
+        this.vote.emit({myVote: this.myVote});
     }
 
     onVoteDown(): void {
-        if(this.voteCount == this.baseVote || this.voteCount == this.baseVote + 1) 
-            this.voteCount -= 1;
+        if(this.myVote == -1) return;
+            
+        this.myVote--;
+        this.vote.emit({myVote: this.myVote});
     }
-
 }

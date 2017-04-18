@@ -20,27 +20,39 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         execute: function() {
             VoterComponent = (function () {
                 function VoterComponent() {
-                    this.title = 'Voter';
-                    this.voteCount = 10;
-                    this.baseVote = this.voteCount;
+                    this.voteCount = 0;
+                    this.myVote = 0;
+                    this.vote = new core_1.EventEmitter();
                 }
                 VoterComponent.prototype.onVoteUp = function () {
-                    if (this.voteCount == this.baseVote || this.voteCount == this.baseVote - 1)
-                        this.voteCount += 1;
+                    if (this.myVote == 1)
+                        return;
+                    this.myVote++;
+                    this.vote.emit({ myVote: this.myVote });
                 };
                 VoterComponent.prototype.onVoteDown = function () {
-                    if (this.voteCount == this.baseVote || this.voteCount == this.baseVote + 1)
-                        this.voteCount -= 1;
+                    if (this.myVote == -1)
+                        return;
+                    this.myVote--;
+                    this.vote.emit({ myVote: this.myVote });
                 };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Object)
                 ], VoterComponent.prototype, "voteCount", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], VoterComponent.prototype, "myVote", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], VoterComponent.prototype, "vote", void 0);
                 VoterComponent = __decorate([
                     core_1.Component({
                         selector: 'voter',
-                        template: "\n        <div class='vote'>\n            <i class='glyphicon glyphicon-menu-up' \n               (click)='onVoteUp()'\n               [class.orange]='vote > baseVote'>\n            </i>\n            <span>{{vote}}</span>\n            <i class='glyphicon glyphicon-menu-down' \n               (click)='onVoteDown()'\n               [class.orange]='vote < baseVote'>\n            </i>\n        </div>\n    ",
-                        styles: ["\n        .vote {\n            font-size: 25px;\n            width: 20px;\n        }\n        .glyphicon {\n            cursor: hand;\n        }\n        .orange {\n            color: orange;\n        }\n    "]
+                        template: "\n        <div class='voter'>\n            <i class='glyphicon glyphicon-menu-up vote-button' \n                [class.highlighted]='myVote == 1'\n                (click)='onVoteUp()'>\n            </i>\n            <span class='vote-count'>{{voteCount + myVote}}</span>\n            <i class='glyphicon glyphicon-menu-down vote-button' \n                [class.highlighted]='myVote == -1'\n                (click)='onVoteDown()'>\n            </i>\n        </div>\n    ",
+                        styles: ["\n        .voter {\n            width: 20px;\n            text-align: center;\n            color: #999;\n        }\n        .vote-count {\n            font-size: 1.2em;\n        }\n        .vote-button {\n            cursor: pointer;\n        }\n        .highlighted {\n            font-weight: bold;\n            color: orange;\n        }\n    "]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], VoterComponent);
